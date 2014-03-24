@@ -1,0 +1,50 @@
+{% extends 'layout.twig' %}
+
+{% block meta %}
+
+{% if tags|length > 0 %}
+{% include "includes/meta-tags.twig" %}
+{% endif %}
+
+{% endblock %}
+
+{% block page_title %}{{ image.title }} | Day {{ image.day }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div id="day-photo-wrapper">
+        <div class="day-photo text-center col-md-12">
+            <a href="http://flickr.com/photos/{{ profile.flickr_username }}/{{ image.photoId }}/lightbox" target="_blank" title="View on Flickr">
+                <img class="img-responsive img-thumbnail" src="{{ image.daySize.source }}" />
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="photo-meta col-md-10 col-md-offset-1">
+        <h3>{{ image.title }} <small>{{ image.posted|date("d F Y") }}, Day {{ image.day }}</small></h3>
+        <p>{{ image.description|raw }}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="pager">
+            <li class="previous">
+                {% if previous != 0 %}
+                <a id="previous-day" href="{{ baseUrl() }}/day/{{ previous }}">&larr; Older</a>
+                {% endif %}
+            </li>
+            <li class="next">
+                {% if next != 0 %}
+                <a id="next-day" href="{{ baseUrl() }}/day/{{ next }}">Newer &rarr;</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="/js/keyboard-navigation.js"></script>
+{% include "includes/addthis.twig" %}
+{% endblock %}

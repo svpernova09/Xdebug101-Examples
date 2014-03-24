@@ -1,0 +1,13 @@
+.vagrant
+/vendor/
+.DS_STORE
+*.un~
+config/local.php
+docs
+build
+tags
+xhprof
+!Icons
+index.html
+feed.xml
+webgrind

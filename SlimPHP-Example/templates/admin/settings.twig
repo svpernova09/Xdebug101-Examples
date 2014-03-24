@@ -1,0 +1,103 @@
+{% extends 'layout.twig' %}
+
+{% block page_title %}{{ parent() }} | Admin{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <h2>Clear Cache</h2>
+        {% if flash['cacheSuccess'] is defined %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ flash['cacheSuccess'] }}
+        </div>       
+        {% endif %}
+        {% if flash['cacheFailure'] is defined %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ flash['cacheFailure'] }}
+        </div>
+        {% endif %}
+        <p>
+            <em>
+                Sometimes things get a little wonky. Clearing cache is a good first
+                troubleshooting step.
+            </em>
+        </p>
+        <form name="clear-cache" id="clear-cache" action="/admin/clear-cache" method="post">
+            <input type="hidden" name="clear" value="1" />
+            <button class="btn btn-default btn-lg btn-block" type="submit">
+                <span class="glyphicon glyphicon-remove"></span> Clear Photo Cache
+            </button>
+        </form>
+        <p>{# This is a total css copout. I'm ashamed, but there ya go #}</p>
+        <h2>Force Feed Refresh</h2>
+        <p>
+            <em>
+                If you cheat and manually add an image to the database, you should 
+                refresh the feed to ensure the image shows up.
+            </em>
+        </p>
+        <p>
+            <a href="/admin/feed" class="btn btn-default btn-lg btn-block">
+                <span class="glyphicon glyphicon-refresh"></span> Refresh Feed
+            </a>
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h2>Update Your Info</h2>
+        <h4>Change Your Email Address</h4>
+        {% if flash['emailSuccess'] is defined %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ flash['emailSuccess'] }}
+        </div>       
+        {% endif %}
+        {% if flash['emailError'] is defined %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ flash['emailError'] }}
+        </div>
+        {% endif %}
+        <form role="form" method="post" action="/admin/user" name="change-email-form" id="change-email-form" class="well well-sm">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" value="{{ user.email }}" required>
+            </div>
+            <input type="hidden" name="form-type" value="change-email">
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+
+        <h4>Change Your Password</h4>
+        {% if flash['passwordSuccess'] is defined %}
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ flash['passwordSuccess'] }}
+        </div>       
+        {% endif %}
+        {% if flash['passwordError'] is defined %}
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ flash['passwordError'] }}
+        </div>
+        {% endif %}
+        <form role="form" method="post" action="/admin/user" name="change-password-form" id="change-password-form" class="well well-sm">
+            <div class="form-group">
+                <label for="password">Current password</label>
+                <input type="password" name="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label for="new-password">New password</label>
+                <input type="password" name="new-password" class="form-control" placeholder="New password">
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm your new password</label>
+                <input type="password" name="confirm-password" class="form-control" placeholder="Confirm your password">
+            </div>
+            <input type="hidden" name="form-type" value="change-password">
+            <input type="hidden" name="email" value="{{ user.email }}">
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
