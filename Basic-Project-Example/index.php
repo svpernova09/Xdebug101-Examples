@@ -1,12 +1,16 @@
 <?php
 
+$database_name = "database";
+$database_user = "user";
+$database_pass = "password";
+$database_host = "localhost";
 
 $first_name = "Joe";
 $last_name = "Ferguson";
 
 $full_name = $first_name . ' ' . $last_name;
 
-$first_name = "Joseph";
+$database_name = "Joseph";
 ?>
 
 <html>
